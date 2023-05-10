@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+}
+
+.link-styles {
+  padding: 0 30px;
+  color: #fff;
+}
+
+.main-buttons {
+  padding: 20px 20px;
+  border-radius: 15%;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.btn:hover {
+  background-color: rgb(183, 217, 247);
+  transition: all 0.9s, color 0.3;
+}
