@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import { db } from "./Firebase";
 import "firebase/firestore"; 
 
-// import { collection,getDocs } from 'firebase/firestore/lite';
+import { collection,getDocs } from 'firebase/firestore/lite';
 import useGeolocation from "react-hook-geolocation";
+import userLocation from "./userLocation";
 
 
 const {kakao} = window;
 function Kakao (){
 
-  useEffect(()=>{ mapscript();
-  },[])
+  useEffect(()=>{ mapscript();},[])
   
   const mapscript = () => {
   const container = document.getElementById('map');
@@ -39,9 +39,7 @@ function Kakao (){
         new kakao.maps.Size(32, 40),
         {
             offset: new kakao.maps.Point(15, 29)
-        }
-    ); 
-
+        }); 
         console.log(mylat,mylon);
         new kakao.maps.Marker({
           map:map,
@@ -51,7 +49,9 @@ function Kakao (){
         })
 
       });
+      <userLocation/>
     }
+    
     }
     
   
