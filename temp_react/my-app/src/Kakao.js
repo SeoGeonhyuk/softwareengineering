@@ -14,15 +14,23 @@ function Kakao (){
   
 
   const [loctaion, setLocation] = useState({});
+  const [direction, setDirection] = useState(null);
   const [error, setError] = useState(null);
   let options;
   const locationWatchId = useRef(null);
+
+  const handleOrientationChange = (event) => {
+    if (event.absolute === true && event.alpha !== null) {
+      const newDirection = event.alpha.toFixed(2);
+      setDirection(newDirection);
+    }
+  };
 
 
   const handleSuccess = (pos)=>{
     const{latitude,longitude} = pos.coords;
 
-    setLocation({latitude, longitude}) // 현재위치
+    setLocation({latitude, longitude}) // 현재 위치
   }
 
   const handleError = (error) =>{
@@ -41,6 +49,13 @@ function Kakao (){
       return;
     }
     locationWatchId.current = geolocation.watchPosition(handleSuccess,handleError,options);
+    
+    window.addEventListener('deviceorientation', handleOrientationChange);
+
+    return () => {
+      geolocation.clearWatch(locationWatchId.current);
+      window.removeEventListener('deviceorientation', handleOrientationChange);
+    };
   },[options]);
 
   const mapscript = () => {
@@ -67,6 +82,7 @@ function Kakao (){
         offset: new kakao.maps.Point(15, 29)
       }); 
       console.log(loctaion);
+      console.log(direction);
       new kakao.maps.Marker({
         map:map,
         position: locPosition,
