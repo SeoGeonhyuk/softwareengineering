@@ -10,6 +10,10 @@ function AjouTrashScreen() {
 
   useEffect(() => {
     requestLocationPermission();
+    return () => {
+      // Clean up the watchPosition listener when the component is unmounted
+      Geolocation.clearWatch(watchId);
+    };
   }, []);
 
   const requestLocationPermission = async () => {
@@ -27,24 +31,29 @@ function AjouTrashScreen() {
   };
 
   useEffect(() => {
-    if (hasLocationPermission) {
-      getCurrentLocation();
-    }
-  }, [hasLocationPermission]);
+    let watchId = null;
 
-  const getCurrentLocation = () => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const { latitude, longitude } = position.coords;
-        setCurrentLatitude(latitude);
-        setCurrentLongitude(longitude);
-      },
-      error => {
-        console.error('Failed to get current location:', error);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
-  };
+    if (hasLocationPermission) {
+      watchId = Geolocation.watchPosition(
+        position => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLatitude(latitude);
+          setCurrentLongitude(longitude);
+        },
+        error => {
+          console.error('Failed to get current location:', error);
+        },
+        { enableHighAccuracy: true, distanceFilter: 5 }
+      );
+    }
+
+    return () => {
+      // Clean up the watchPosition listener when hasLocationPermission changes or the component is unmounted
+      if (watchId) {
+        Geolocation.clearWatch(watchId);
+      }
+    };
+  }, [hasLocationPermission]);
 
   const initCoords = { latitude: 37.2822222, longitude: 127.04410553 };
 
