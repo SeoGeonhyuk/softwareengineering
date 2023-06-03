@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Component, useEffect } from 'react';
 import { View, Text, Button, Platform, Alert, BackHandler } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,27 +10,46 @@ import Seongho from './Screen/Ajou3D/Seongho';
 import Paldal from './Screen/Ajou3D/Sanhak';
 import Sanhak from './Screen/Ajou3D/Paldal';
 import Eulgok from './Screen/Ajou3D/Eulgok';
+import AjouNMap from './AjouMap/AjouNMap';
+import TmapScreen from './Screen/TmapScreen'
 const Stack = createNativeStackNavigator();
 
-const App = () => {
-  React.useEffect(() => {
+//  React.useEffect(() => {
+//    setTimeout(() => {
+//      SplashScreen.hide();
+//    }, 3000);
+//  }, []);
+
+class App extends Component {
+
+  componentDidMount(){
     setTimeout(() => {
-      SplashScreen.hide();
-    }, 3000);
-  }, []);
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="AjouTrash" component={AjouTrashScreen} />
-        <Stack.Screen name="Ajou3D" component={Ajou3DScreen} />
-        <Stack.Screen name="Sanhak" component={Sanhak} />
-        <Stack.Screen name="Eulgok" component={Eulgok} />
-        <Stack.Screen name="Paldal" component={Paldal} />
-        <Stack.Screen name="Seongho" component={Seongho} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+          SplashScreen.hide();
+        }, 3000);
+  }
+  render() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home">
+            {(props) => <HomeScreen {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="Ajou3D">
+            {(props) => <Ajou3DScreen {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="AjouTrashSearch">
+            {(props) => <AjouTrashScreen {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="AjouNMap">
+            {(props) => <AjouNMap {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="Tmap">
+                      {(props) => <TmapScreen {...props} />}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+}
 
 export default App;

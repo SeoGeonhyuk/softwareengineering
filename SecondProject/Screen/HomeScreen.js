@@ -1,21 +1,38 @@
-import * as React from 'react';
-import { Button, View, Text } from 'react-native';
-import geolocation from 'react-native-geolocation-service';
-//
-// LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
-//       TMapView tMapView = new TMapView(this);
-//
-//       tMapView.setSKTMapApiKey( "3Sjdm3sS127wMtVLgM3B666RzUG0otdIagWKhrra" );
-//       linearLayoutTmap.addView( tMapView );
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
+class HomeScreen extends Component {
+  render() {
+    const { navigation } = this.props;
 
+    return (
+      <View style={styles.container}>
+        <Text>Home Screen</Text>
+        <Button
+          title="Go to 3D Map"
+          onPress={() => navigation.navigate('Ajou3D')}
 
-function HomeScreen({ navigation }) {
-
-    return (React.createElement(View, { style: { flex: 1, alignItems: 'center', justifyContent: 'center' } },
-        React.createElement(Text, null, ),
-
-        React.createElement(Button, { title: "go to Ajou3D", onPress: () => navigation.navigate('Ajou3D') }),
-        React.createElement(Button, { title: "go to AjouTrash", onPress: () => navigation.navigate('AjouTrash') })));
+        />
+        <Button
+          title="Go to Trash Search"
+          onPress={() => navigation.navigate('AjouTrashSearch')}
+        />
+         <Button
+                  title="Go to Tmap"
+                  onPress={() => navigation.navigate('Tmap')}
+                />
+      </View>
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+
 export default HomeScreen;
