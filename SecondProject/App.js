@@ -7,8 +7,8 @@ import HomeScreen from './Screen/HomeScreen';
 import AjouTrashScreen from './Screen/AjouTrashScreen';
 import Ajou3DScreen from './Screen/Ajou3DScreen';
 import Seongho from './Screen/Ajou3D/Seongho';
-import Paldal from './Screen/Ajou3D/Sanhak';
-import Sanhak from './Screen/Ajou3D/Paldal';
+import Sanhak from './Screen/Ajou3D/Sanhak';
+import Paldal from './Screen/Ajou3D/Paldal';
 import Eulgok from './Screen/Ajou3D/Eulgok';
 import AjouNMap from './AjouMap/AjouNMap';
 import TmapScreen from './Screen/TmapScreen'
@@ -45,6 +45,18 @@ class App extends Component {
           </Stack.Screen>
           <Stack.Screen name="Tmap">
                       {(props) => <TmapScreen {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="Seongho">
+                      {(props) => <Seongho {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="Paldal">
+                                {(props) => <Paldal {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="Eulgok">
+                                {(props) => <Eulgok {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="Sanhak">
+                                {(props) => <Sanhak {...props} />}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
