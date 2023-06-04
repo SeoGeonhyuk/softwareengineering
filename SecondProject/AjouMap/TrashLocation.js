@@ -1,49 +1,23 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
-class TrashLocation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      trashList: [],
+const TrashLocation = ({ setTrashLocationList }) => {
+  useEffect(() => {
+    const fetchTrashList = async () => {
+      try {
+        const querySnapshot = await firestore().collection('trash').get();
+        const trashList = querySnapshot.docs.map((doc) => doc.data());
+        setTrashLocationList(trashList);
+      } catch (error) {
+        console.error('Error fetching trash bins:', error);
+      }
     };
-  }
 
-  fetchTrashList = async () => {
-    try {
-      const querySnapShot = await firestore().collection('trash').get();
-      const trashList = [];
-      querySnapShot.forEach((doc) => {
-        const trash = doc.data();
-        trashList.push(trash);
-      });
-      this.setState({ trashList });
-      this.props.onTrashLocationUpdate(trashList);
-    } catch (error) {
-      console.error('Error fetching trash bins:', error);
-    }
-  };
+    fetchTrashList();
+  }, []);
 
-
-  componentDidMount() {
-    this.fetchTrashList();
-  }
-
-  render() {
-     var { trashList } = this.state;
-    return (
-      <View>
-        <Text>Trash Location Component</Text>
-      </View>
-    );
-  }
-}
-class FindTrash extends Component{
-
-
-
-
-}
+  return null;
+};
 
 export default TrashLocation;

@@ -1,32 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from 'react-native';
-import CompassHeading from 'react-native-compass-heading';
+import { Text, View } from 'react-native';
+import { accelerometer, gyroscope, setUpdateIntervalForType, SensorTypes } from 'react-native-sensors';
 
-const CompassScreen = () => {
-  const [heading, setHeading] = useState(0);
-  const [accuracy, setAccuracy] = useState(0);
+setUpdateIntervalForType(SensorTypes.accelerometer, 100);
+setUpdateIntervalForType(SensorTypes.gyroscope, 100);
 
+const Compass = ({ userLocation, setUserDirection }) => {
   useEffect(() => {
-    const degree_update_rate = 3;
+    let gyroAvailable = false;
+    let previousDirection = 0;
 
-    CompassHeading.start(degree_update_rate, ({ heading, accuracy }) => {
-      setHeading(heading);
-      setAccuracy(accuracy);
+    const subscriptionGyroscope = gyroscope.subscribe(({ z }) => {
+      if (!gyroAvailable) {
+        gyroAvailable = true;
+        return;
+      }
+
+      const delta = z * 180 / Math.PI * 0.1;
+      previousDirection += delta;
+
+      if (previousDirection >= 360) {
+        previousDirection -= 360;
+      } else if (previousDirection < 0) {
+        previousDirection += 360;
+      }
+
+      setUserDirection(previousDirection);
+    });
+
+    const subscriptionAccelerometer = accelerometer.subscribe(({ x, y }) => {
+      const angle = Math.atan2(x, y) * (180 / Math.PI);
+      const normalizedAngle = (angle + 360) % 360;
+      const direction = Math.round(normalizedAngle / 45) * 45;
+
+      if (!gyroAvailable) {
+        setUserDirection(direction);
+      }
     });
 
     return () => {
-      CompassHeading.stop();
+      subscriptionGyroscope.unsubscribe();
+      subscriptionAccelerometer.unsubscribe();
     };
-  }, []);
+  }, [setUserDirection]);
 
-
-  const direction = getDirection(heading);
-
-  return (
-    <Text>
-      CompassHeading: {heading}°, Accuracy: {accuracy}
-    </Text>
-  );
+  return null;
 };
 
-export default CompassScreen;
+export default Compass;

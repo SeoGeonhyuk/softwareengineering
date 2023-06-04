@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, PermissionsAndroid, Alert, BackHandler } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import AjouNMap from './AjouNMap';
+import GetDirection from './GetDirection';
 
 class Permission extends Component {
 
@@ -22,7 +22,7 @@ class Permission extends Component {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
       );
       if (granted) {
-        this.props.navigation.navigate('AjouNMap');
+        this.props.navigation.navigate('GetDirection');
       } else {
         this.requestLocationPermission();
       }

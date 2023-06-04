@@ -10,7 +10,7 @@ import Seongho from './Screen/Ajou3D/Seongho';
 import Sanhak from './Screen/Ajou3D/Sanhak';
 import Paldal from './Screen/Ajou3D/Paldal';
 import Eulgok from './Screen/Ajou3D/Eulgok';
-import AjouNMap from './AjouMap/AjouNMap';
+import GetDirection from './AjouMap/GetDirection';
 import TmapScreen from './Screen/TmapScreen'
 const Stack = createNativeStackNavigator();
 
@@ -40,8 +40,8 @@ class App extends Component {
           <Stack.Screen name="AjouTrashSearch">
             {(props) => <AjouTrashScreen {...props} />}
           </Stack.Screen>
-          <Stack.Screen name="AjouNMap">
-            {(props) => <AjouNMap {...props} />}
+          <Stack.Screen name="GetDirection">
+            {(props) => <GetDirection {...props} />}
           </Stack.Screen>
           <Stack.Screen name="Tmap">
                       {(props) => <TmapScreen {...props} />}
