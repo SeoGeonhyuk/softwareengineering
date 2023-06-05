@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-native-heading": "^1.1.1",
+    "react-native-simple-compass": "^1.0.0"
+  }
+}

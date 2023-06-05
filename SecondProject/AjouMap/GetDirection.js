@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Dimensions, Image } from 'react-native';
-import NaverMapView, { Marker } from 'react-native-nmap';
-import Compass from './Compass';
+import { Button, Text, View, StyleSheet, Dimensions, Image } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import UserLocation from './UserLocation';
 import TrashLocation from './TrashLocation';
 import ClosestTrash from './ClosestTrash';
 import Arrow from './Arrow';
+import Compass from './Compass';
+
 
 const GetDirection = () => {
   const [userLocation, setUserLocation] = useState(null);
@@ -13,7 +16,10 @@ const GetDirection = () => {
   const [trashLocationList, setTrashLocationList] = useState([]);
   const [closestTrash, setClosestTrash] = useState(null);
   const [closestTrashDirection, setClosestTrashDirection] = useState(null);
+  const [closestTrashDistance, setClosestTrashDistance] = useState(null);
   const [arrowAngle, setArrowAngle] = useState(0);
+
+  const navigation = useNavigation();
 
   const initCoords = { latitude: 37.2822222, longitude: 127.04410553 };
 
@@ -26,56 +32,45 @@ const GetDirection = () => {
         trashLocationList={trashLocationList}
         setClosestTrash={setClosestTrash}
         setClosestTrashDirection={setClosestTrashDirection}
+        setClosestTrashDistance = {setClosestTrashDistance}
       />
       <Compass
-        setUserDirection={setUserDirection}
+        UserLocation = {userLocation}
+        setUserDirection = {setUserDirection}
       />
+
       <Arrow
         userDirection={userDirection}
         closestTrashDirection={closestTrashDirection}
         setArrowAngle={setArrowAngle}
       />
-
-      <Text>{userDirection} {closestTrashDirection} {arrowAngle}</Text>
-
-      <View style={styles.mapContainer}>
-        <NaverMapView style={styles.map} center={initCoords} zoom={13}>
-          {userLocation && userLocation.length === 2 && (
-            <Marker
-              coordinate={{ latitude: userLocation[0], longitude: userLocation[1] }}
-            />
-          )}
-          {closestTrash && (
-            <Marker
-              coordinate={{ latitude: closestTrash.lat, longitude: closestTrash.lng }}
-            />
-          )}
-        </NaverMapView>
-        <View style={styles.arrowContainer}>
-          <Image
-            source={require('./pngwing.com.png')}
-            style={[
-              styles.arrowImage,
-              { transform: [{ rotate: `${arrowAngle}deg` }] },
-            ]}
-          />
-        </View>
+      <View style={styles.arrowContainer}>
+        <Image
+          source={require('./Marker/Arrow.png')}
+          style={[
+            styles.arrowImage,
+            { transform: [{ rotate: `${arrowAngle}deg` }] },
+          ]}
+        />
       </View>
+      <Text>{closestTrashDistance}</Text>
+      <Button
+        title="지도 보기"
+        onPress={() =>
+          navigation.navigate('AjouNmap', {
+            userLocation : userLocation,
+            closestTrash : closestTrash,
+          })
+        }
+      />
     </View>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  mapContainer: {
-    flex: 1,
-    position: 'relative',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
   },
   arrowContainer: {
     position: 'absolute',
