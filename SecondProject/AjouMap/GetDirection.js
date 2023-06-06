@@ -32,11 +32,11 @@ const GetDirection = () => {
         trashLocationList={trashLocationList}
         setClosestTrash={setClosestTrash}
         setClosestTrashDirection={setClosestTrashDirection}
-        setClosestTrashDistance = {setClosestTrashDistance}
+        setClosestTrashDistance={setClosestTrashDistance}
       />
       <Compass
-        UserLocation = {userLocation}
-        setUserDirection = {setUserDirection}
+        UserLocation={userLocation}
+        setUserDirection={setUserDirection}
       />
 
       <Arrow
@@ -53,24 +53,30 @@ const GetDirection = () => {
           ]}
         />
       </View>
-      <Text>{closestTrashDistance}</Text>
       <Button
         title="지도 보기"
         onPress={() =>
           navigation.navigate('AjouNmap', {
-            userLocation : userLocation,
-            closestTrash : closestTrash,
+            userLocation: userLocation,
+            closestTrash: closestTrash,
           })
         }
       />
+      {closestTrashDistance <= 5 ? (
+        <Text style={styles.distanceText}>쓰레기통을 찾았습니다!</Text>
+      ) : (
+        <Text style={styles.distanceText}>
+          남은 거리: {Math.round(closestTrashDistance)}M
+        </Text>
+      )}
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#8cff96',
   },
   arrowContainer: {
     position: 'absolute',
@@ -80,11 +86,19 @@ const styles = StyleSheet.create({
     height: 50,
     marginTop: -25,
     marginLeft: -25,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   arrowImage: {
-    width: '100%',
-    height: '100%',
+    width: '300%',
+    height: '300%',
     resizeMode: 'contain',
+  },
+  distanceText: {
+    marginTop: 550,
+    marginLeft: 20,
+    fontSize: 30,
+    fontWeight: 'bold',
   },
 });
 

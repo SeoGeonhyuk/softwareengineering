@@ -12,12 +12,10 @@ class Permission extends Component {
       permission: false,
   }
 
-  //실시간 위치 권한 정보 확인
   componentDidMount() {
     this.checkLocationPermission();
   }
 
-  // 이미 permission 되있는 경우
   checkLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.check(
@@ -33,7 +31,6 @@ class Permission extends Component {
     }
   };
 
-  // permission 승낙
   requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -51,7 +48,6 @@ class Permission extends Component {
     }
   };
 
-  // permission 거부
   denyPermission = () => {
     Alert.alert('Permission Denied');
     BackHandler.exitApp();

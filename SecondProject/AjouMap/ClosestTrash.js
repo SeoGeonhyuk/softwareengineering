@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 const ClosestTrash = ({ userLocation, trashLocationList, setClosestTrash, setClosestTrashDirection , setClosestTrashDistance }) => {
   const calculateDistance = (loc1, loc2) => {
-    const earthRadius = 6371; // 지구 반지름 (단위: km)
+    const earthRadius = 6371;
 
     const latDiff = (loc2.lat - loc1[0]) * (Math.PI / 180);
     const lonDiff = (loc2.lng - loc1[1]) * (Math.PI / 180);
@@ -48,6 +48,8 @@ const calculateDirection = (userLocation, closestTrash) => {
         setClosestTrash(closest);
         const direction = calculateDirection(userLocation, closest);
         setClosestTrashDirection(direction);
+
+        minDistance = Math.floor(minDistance * 1000);
         setClosestTrashDistance(minDistance);
       }
     };

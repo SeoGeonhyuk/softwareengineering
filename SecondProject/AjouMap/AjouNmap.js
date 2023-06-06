@@ -16,7 +16,6 @@ const AjouNmap = () => {
 
   return (
     <View style={styles.container}>
-      <Text> {userLocation} </Text>
 
       {userLocation && userLocation.length === 2 && (
         <View style={styles.mapContainer}>
