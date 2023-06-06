@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/* import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 
 class HomeScreen extends Component {
@@ -33,6 +33,44 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+
+export default HomeScreen;  */
+
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Button, TouchableOpacity, Image } from 'react-native';
+import styles from './styles.js'
+
+class HomeScreen extends Component {
+  render() {
+    const { navigation } = this.props;
+
+    return (
+
+      <View style={styles.home_container}>
+      <View style={styles.titleContainer}>
+                      <Text style={styles.title}>AJOU LAND</Text>
+                      <Text style={styles.description}>건물3D지도 및 휴지통 위치 제공앱</Text>
+      </View>
+        <View style={styles.logoContainer}>
+          <Image source={require('./logo.png')} style={styles.logo} />
+        </View>
+
+
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Ajou3D')}>
+          <Text style={styles.buttonText}>View 3D Map</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AjouTrashSearch')}>
+          <Text style={styles.buttonText}>Trash bin Search</Text>
+        </TouchableOpacity>
+
+
+
+      </View>
+    );
+  }
+}
 
 
 export default HomeScreen;

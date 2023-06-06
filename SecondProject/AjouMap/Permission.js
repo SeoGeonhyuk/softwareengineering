@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Button, PermissionsAndroid, Alert, BackHandler } from 'react-native';
+import { View, Text, Button, PermissionsAndroid, Alert, BackHandle, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GetDirection from './GetDirection';
+import styles from './styles.js'
+
 
 class Permission extends Component {
 
@@ -57,10 +59,18 @@ class Permission extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Location Permission</Text>
-        <Button title="Request Permission" onPress={this.requestLocationPermission} />
-        <Button title="Deny Permission" onPress={this.denyPermission} />
+      <View style={styles.container}>
+        <Text style={styles.title}>Location Permission</Text>
+
+
+        <TouchableOpacity style={styles.button} onPress={this.requestLocationPermission}>
+                  <Text style={styles.buttonText}>Request Permission</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={this.denyPermission}>
+                  <Text style={styles.buttonText}>Deny Permission</Text>
+        </TouchableOpacity>
+
         {this.props.children}
       </View>
     );
